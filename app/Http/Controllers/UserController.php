@@ -15,13 +15,16 @@ use Carbon\Carbon;
 class UserController extends Controller
 {
 
-    public function user_dashboard(){
-         // Get the total number of sales for today
-    $totalSales = Sales::whereDate('created_at', Carbon::today())->count();
+    public function user_dashboard()
+    {
+        // Get the total number of sales for today
+        $totalSalesCount = Sales::whereDate('created_at', Carbon::today())->count();
 
+        // Get the total sales amount for today
+        $totalSalesAmount = Sales::whereDate('created_at', Carbon::today())->sum('total_price'); // Adjust 'amount' to the correct column name for sale amount
 
-         return view('user.index',compact('totalSales'));
-     }
+        return view('user.index', compact('totalSalesCount', 'totalSalesAmount'));
+    }
 
     public function Userlogout(Request $request): RedirectResponse
     {
@@ -41,7 +44,7 @@ class UserController extends Controller
     public function view_sales()
     {
         $products = Product::all();
-        return view('user.sales', compact('products'));
+        return view('user.sales1', compact('products'));
     }
 
     public function add_sales(Request $request)
@@ -91,7 +94,7 @@ class UserController extends Controller
     {
         $sales = Sales::all(); // Changed 'sales' to 'Sales'
         $sales = Sales::with('product')->get();
-        return view('user.list_sales', compact('sales'));
+        return view('user.list1_sales', compact('sales'));
     }
 
     public function delete_sales($id)

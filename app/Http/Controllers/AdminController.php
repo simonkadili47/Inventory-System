@@ -19,13 +19,16 @@ class AdminController extends Controller
         // Get the total number of products
         $totalProducts = Product::count();
 
-        // Get the total number of sales for today
-        $totalSales = Sales::whereDate('created_at', Carbon::today())->count();
+         // Get the total number of sales for today
+         $totalSalesCount = Sales::whereDate('created_at', Carbon::today())->count();
+
+         // Get the total sales amount for today
+         $totalSalesAmount = Sales::whereDate('created_at', Carbon::today())->sum('total_price'); // Adjust 'amount' to the correct column name for sale amount
 
         // Get the total number of system users
         $totalUsers = User::count();
 
-        return view('admin.index', compact('totalProducts', 'totalSales', 'totalUsers'));
+        return view('admin.index', compact('totalProducts', 'totalSalesCount','totalSalesAmount', 'totalUsers'));
     }
 
     public function Adminlogout(Request $request): RedirectResponse
