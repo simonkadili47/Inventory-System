@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
         }
         if($request->user()->usertype =='user'){
 
-            return redirect('user_dashboard');
+            return redirect('user/dashboard');
         
         }
 
