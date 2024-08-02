@@ -29,7 +29,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Admin Routes with Authentication and Admin Middleware
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('admin/logout', [AdminController::class, 'Adminlogout'])->name('admin.logout');
-    // Route::post('user/dashboard', [HomeController::class, 'user'])->name('admin.dashboard');
 
 
     Route::get('view_category', [AdminController::class, 'view_category']);
@@ -66,7 +65,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // User Routes with Authentication and User Middleware
 Route::middleware(['user'])->group(function () {
 
-    Route::get('/user/dashboard', [HomeController::class, 'user_dashboard'])->name('user.dashboard');
+    Route::get('user/dashboard', [HomeController::class, 'user_dashboard'])->name('user.dashboard');
 //     Route::get('/user.index', [UserController::class, 'index'])->name('user.index');
 // Route::get('/admin.index', [AdminController::class, 'index'])->name('admin.index');
 
@@ -77,7 +76,10 @@ Route::middleware(['user'])->group(function () {
     Route::get('/edit_sales/{id}', [UserController::class, 'edit_sales'])->name('edit_sales');
     Route::put('/update_sales/{id}', [UserController::class, 'update_sales'])->name('update_sales');
 
+    Route::get('user_dashboard', [HomeController::class, 'user_dashboard']);
+
     Route::post('/user/logout', [UserController::class, 'Userlogout'])->name('user.logout');
+
 });
 
 require __DIR__.'/auth.php';

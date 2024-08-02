@@ -87,7 +87,7 @@
       background-color: #003366; /* Dark blue background for th */
       color: white; /* White text for th */
     }
-    
+
     .table tbody td {
       color: black; /* Black text color for table data */
     }
@@ -138,7 +138,7 @@
   </style>
 </head>
 <body>
-<header class="header">   
+<header class="header">
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid d-flex align-items-center justify-content-between">
       <div class="navbar-header">
@@ -162,7 +162,7 @@
   <nav id="sidebar">
     <ul class="list-unstyled">
       <li class="active"><a href="{{ url('user_dashboard') }}"> <i class="icon-home"></i>Home </a></li>
-  
+
       <li>
         <a href="#SalesDropdown" aria-expanded="false" data-toggle="collapse">
           <i class="fa fa-money"></i> Sales
@@ -172,9 +172,9 @@
         <li><a href="{{url('list_sales')}}">Sales List</a></li>
         </ul>
       </li>
-      
 
-   
+
+
   </nav>
   <!-- Sidebar Navigation end-->
   <div class="page-content">
@@ -203,7 +203,7 @@
                     <th>Total</th>
                     <th>Profit</th>
                     <th>Date</th>
-                    <th>Action</th>
+                    {{-- <th>Action</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -218,10 +218,10 @@
                     <td>{{ $sale->total_price }}</td>
                     <td>{{ ($sale->quantity * $sale->selling_price) - ($sale->quantity * $sale->product->buying_price) }}</td> <!-- Calculate and display profit -->
                     <td>{{ $sale->date }}</td>
-                    <td>
+                    {{-- <td>
                         <a href="{{ url('delete_sales', $sale->id) }}" class="btn btn-danger" onClick="Confirmation(event)">Delete</a>
                         <a href="{{ url('edit_sales', $sale->id) }}" class="btn btn-success">Edit</a>
-                    </td>
+                    </td> --}}
                 </tr>
                 @endforeach
                 <!-- More rows can be added here -->

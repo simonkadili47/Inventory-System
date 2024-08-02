@@ -9,15 +9,20 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Sales;
+use Carbon\Carbon;
+
 
 class UserController extends Controller
 {
 
     public function user_dashboard(){
-         
-         return view('user.index');
+         // Get the total number of sales for today
+    $totalSales = Sales::whereDate('created_at', Carbon::today())->count();
+
+
+         return view('user.index',compact('totalSales'));
      }
-  
+
     public function Userlogout(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
@@ -100,7 +105,7 @@ class UserController extends Controller
     {
         $sales = Sales::find($id);
         $products = Product::all();
-        
+
 
         return view('user.edit_sales', compact('sales','products'));
     }
@@ -115,7 +120,7 @@ class UserController extends Controller
         $sales->selling_price = $request->selling_price;
         $sales->quantity = $request->quantity;
 
-      
+
         $sales->save();
 
         // Flash a success message to the session with Toastr options
@@ -133,5 +138,5 @@ class UserController extends Controller
         return redirect('/list_sales');
     }
 
-    
+
 }
