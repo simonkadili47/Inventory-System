@@ -15,28 +15,24 @@ use Carbon\Carbon;
 class AdminController extends Controller
 {
     public function admin_dashboard()
-   
-{
-   
-    // Get the total number of products
-    $totalProducts = Product::count();
-   
+    {
+        // Get the total number of products
+        $totalProducts = Product::count();
 
-    // Get the total number of sales for today
-    $totalSales = Sales::whereDate('created_at', Carbon::today())->count();
+        // Get the total number of sales for today
+        $totalSales = Sales::whereDate('created_at', Carbon::today())->count();
 
-    // Get the total number of system users
-    $totalUsers = User::count();
+        // Get the total number of system users
+        $totalUsers = User::count();
 
-    return view('admin.index', compact('totalProducts', 'totalSales', 'totalUsers'));
-}
+        return view('admin.index', compact('totalProducts', 'totalSales', 'totalUsers'));
+    }
 
     public function Adminlogout(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/login');
@@ -56,7 +52,7 @@ class AdminController extends Controller
         $category->save();
 
         // Flash a success message to the session with Toastr options
-        $request->session()->flash('toastr', [
+        session()->flash('toastr', [
             'type' => 'success',
             'message' => 'Category Added Successfully',
             'options' => [
@@ -88,7 +84,6 @@ class AdminController extends Controller
     public function edit_category($id)
     {
         $data = Category::find($id);
-
         return view('admin.edit_category', compact('data'));
     }
 
@@ -100,7 +95,7 @@ class AdminController extends Controller
         $data->save();
 
         // Flash a success message to the session with Toastr options
-        $request->session()->flash('toastr', [
+        session()->flash('toastr', [
             'type' => 'success',
             'message' => 'Category Updated Successfully',
             'options' => [
@@ -132,7 +127,7 @@ class AdminController extends Controller
         $product->save();
 
         // Flash a success message to the session with Toastr options
-        $request->session()->flash('toastr', [
+        session()->flash('toastr', [
             'type' => 'success',
             'message' => 'Product Added Successfully',
             'options' => [
@@ -162,14 +157,12 @@ class AdminController extends Controller
     public function edit_product($id)
     {
         $product = Product::find($id);
-
         return view('admin.edit_product', compact('product'));
     }
 
     public function update_product(Request $request, $id)
     {
         $product = Product::find($id);
-
         $product->product_name = $request->product_name;
         $product->product_description = $request->product_description;
         $product->category_id = $request->category_id;
@@ -179,7 +172,7 @@ class AdminController extends Controller
         $product->save();
 
         // Flash a success message to the session with Toastr options
-        $request->session()->flash('toastr', [
+        session()->flash('toastr', [
             'type' => 'success',
             'message' => 'Product Updated Successfully',
             'options' => [
@@ -192,8 +185,6 @@ class AdminController extends Controller
 
         return redirect('/list_product');
     }
-
-    
 
     public function view_sales()
     {
@@ -219,11 +210,10 @@ class AdminController extends Controller
         $sales->quantity = $request->quantity;
         $sales->total_price = $request->quantity * $request->selling_price;
         $sales->date = $request->date;
-
         $sales->save();
 
         // Flash a success message to the session with Toastr options
-        $request->session()->flash('toastr', [
+        session()->flash('toastr', [
             'type' => 'success',
             'message' => 'Sales Added Successfully',
             'options' => [
@@ -267,11 +257,10 @@ class AdminController extends Controller
         $sales->phone_number = $request->phone_number;
         $sales->selling_price = $request->selling_price;
         $sales->quantity = $request->quantity;
-
         $sales->save();
 
         // Flash a success message to the session with Toastr options
-        $request->session()->flash('toastr', [
+        session()->flash('toastr', [
             'type' => 'success',
             'message' => 'Sales Updated Successfully',
             'options' => [
@@ -308,7 +297,7 @@ class AdminController extends Controller
         $users->save();
 
         // Flash a success message to the session with Toastr options
-        $request->session()->flash('toastr', [
+        session()->flash('toastr', [
             'type' => 'success',
             'message' => 'User Added Successfully',
             'options' => [
@@ -332,7 +321,6 @@ class AdminController extends Controller
     public function edit_users($id)
     {
         $users = User::find($id);
-
         return view('admin.edit_users', compact('users'));
     }
 
@@ -348,7 +336,7 @@ class AdminController extends Controller
         $users->save();
 
         // Flash a success message to the session with Toastr options
-        $request->session()->flash('toastr', [
+        session()->flash('toastr', [
             'type' => 'success',
             'message' => 'User Updated Successfully',
             'options' => [
