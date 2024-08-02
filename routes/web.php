@@ -18,7 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -30,7 +30,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('admin/logout', [AdminController::class, 'Adminlogout'])->name('admin.logout');
     // Route::post('user/dashboard', [HomeController::class, 'user'])->name('admin.dashboard');
-   
+
 
     Route::get('view_category', [AdminController::class, 'view_category']);
     Route::post('add_category', [AdminController::class, 'add_category']);
@@ -64,12 +64,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 // User Routes with Authentication and User Middleware
-    Route::middleware(['auth', 'user'])->group(function () {
-    
-    // Route::get('user/dashboard', [HomeController::class, 'user_dashboard'])->name('user.dashboard');
+Route::middleware(['user'])->group(function () {
+
+    Route::get('/user/dashboard', [HomeController::class, 'user_dashboard'])->name('user.dashboard');
 //     Route::get('/user.index', [UserController::class, 'index'])->name('user.index');
 // Route::get('/admin.index', [AdminController::class, 'index'])->name('admin.index');
-    
+
     Route::get('/view_sales', [UserController::class, 'view_sales'])->name('view_sales');
     Route::post('/add_sales', [UserController::class, 'add_sales'])->name('add_sales');
     Route::get('/list_sales', [UserController::class, 'list_sales'])->name('list_sales');
@@ -77,7 +77,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/edit_sales/{id}', [UserController::class, 'edit_sales'])->name('edit_sales');
     Route::put('/update_sales/{id}', [UserController::class, 'update_sales'])->name('update_sales');
 
-    Route::post('/logout', [UserController::class, 'Userlogout'])->name('logout');
+    Route::post('/user/logout', [UserController::class, 'Userlogout'])->name('user.logout');
 });
 
 require __DIR__.'/auth.php';

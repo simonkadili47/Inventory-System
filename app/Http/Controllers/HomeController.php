@@ -11,8 +11,8 @@ class HomeController extends Controller
     public function index()
     {
 
-        
- 
+
+
         if (Auth::check()) {
             $usertype = Auth::user()->usertype;
 
@@ -28,8 +28,7 @@ class HomeController extends Controller
         }
     }
 
-    // public function user_dashboard(){
-         
-    //      return view('user.index');
-    //  }
+    public function user_dashboard(){
+         return view('user.index');
+     }
 }
