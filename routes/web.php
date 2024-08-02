@@ -18,17 +18,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Admin Routes with Authentication and Admin Middleware
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('admin/logout', [AdminController::class, 'Adminlogout'])->name('admin.logout');
     // Route::post('user/dashboard', [HomeController::class, 'user'])->name('admin.dashboard');
+   
 
     Route::get('view_category', [AdminController::class, 'view_category']);
     Route::post('add_category', [AdminController::class, 'add_category']);
@@ -62,7 +64,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 // User Routes with Authentication and User Middleware
-Route::middleware(['auth', 'user'])->group(function () {
+    Route::middleware(['auth', 'user'])->group(function () {
+    
     // Route::get('user/dashboard', [HomeController::class, 'user_dashboard'])->name('user.dashboard');
 //     Route::get('/user.index', [UserController::class, 'index'])->name('user.index');
 // Route::get('/admin.index', [AdminController::class, 'index'])->name('admin.index');
