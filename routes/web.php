@@ -6,7 +6,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 
-
 // Public Routes
 Route::get('/', function () {
     return view('login');
@@ -18,18 +17,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Admin Routes with Authentication and Admin Middleware
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('admin/logout', [AdminController::class, 'Adminlogout'])->name('admin.logout');
-
 
     Route::get('view_category', [AdminController::class, 'view_category']);
     Route::post('add_category', [AdminController::class, 'add_category']);
@@ -45,7 +40,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('edit_product/{id}', [AdminController::class, 'edit_product']);
     Route::post('update_product/{id}', [AdminController::class, 'update_product']);
 
-     Route::get('admin_dashboard', [AdminController::class, 'admin_dashboard'])->name('admin_dashboard');
+    Route::get('admin_dashboard', [AdminController::class, 'admin_dashboard'])->name('admin_dashboard');
 
     Route::get('view_sales', [AdminController::class, 'view_sales']);
     Route::post('add_sales', [AdminController::class, 'add_sales']);
@@ -63,23 +58,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 // User Routes with Authentication and User Middleware
-Route::middleware(['user'])->group(function () {
-
+Route::middleware(['auth', 'user'])->group(function () {
     Route::get('user/dashboard', [HomeController::class, 'user_dashboard'])->name('user.dashboard');
-//     Route::get('/user.index', [UserController::class, 'index'])->name('user.index');
-// Route::get('/admin.index', [AdminController::class, 'index'])->name('admin.index');
 
-    Route::get('/view_sales', [UserController::class, 'view_sales'])->name('view_sales');
-    Route::post('/add_sales', [UserController::class, 'add_sales'])->name('add_sales');
-    Route::get('/list_sales', [UserController::class, 'list_sales'])->name('list_sales');
-    Route::delete('/delete_sales/{id}', [UserController::class, 'delete_sales'])->name('delete_sales');
-    Route::get('/edit_sales/{id}', [UserController::class, 'edit_sales'])->name('edit_sales');
-    Route::put('/update_sales/{id}', [UserController::class, 'update_sales'])->name('update_sales');
+    Route::get('view_sales', [UserController::class, 'view_sales'])->name('user.view_sales');
+    Route::post('add_sales', [UserController::class, 'add_sales'])->name('user.add_sales');
+    Route::get('list_sales', [UserController::class, 'list_sales'])->name('user.list_sales');
+    Route::delete('delete_sales/{id}', [UserController::class, 'delete_sales'])->name('user.delete_sales');
+    Route::get('edit_sales/{id}', [UserController::class, 'edit_sales'])->name('user.edit_sales');
+    Route::put('update_sales/{id}', [UserController::class, 'update_sales'])->name('user.update_sales');
 
-    Route::get('user_dashboard', [HomeController::class, 'user_dashboard']);
-
-    Route::post('/user/logout', [UserController::class, 'Userlogout'])->name('user.logout');
-
+    Route::post('user/logout', [UserController::class, 'Userlogout'])->name('user.logout');
 });
 
 require __DIR__.'/auth.php';
